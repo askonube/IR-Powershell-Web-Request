@@ -115,7 +115,7 @@ pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ran
 
 
 
-### **Containment Actions**
+### **Containment, Eradication and Recovery**
 
 - The affected VM was isolated using Microsoft Defender for Endpoint (MDE).
 
