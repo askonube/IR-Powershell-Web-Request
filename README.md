@@ -16,11 +16,12 @@
 
 - An alert was defined to trigger for suspicious web requests executed from PowerShell scripts on the virtual host machine `win-vm-mde`. The `DeviceProcessEvents` table was used to uncover more information regarding the incident.
 
+![image](https://github.com/user-attachments/assets/dc3f7fe7-71f8-4244-a3d2-af9cd2b3ef59)
 
-<img width="1500" alt="Pasted image 20250612200947" src="https://github.com/user-attachments/assets/9857aa60-a61f-48a3-b227-b907d1cbbcf3" />
 
 
-<img width="1415" alt="Screenshot 2025-06-12 195209" src="https://github.com/user-attachments/assets/f6696223-b551-4c6c-b93d-456bf0afefdb" />
+<img width="1440" alt="Screenshot 2025-06-13 004249" src="https://github.com/user-attachments/assets/059f7db2-73a4-48b8-aa08-c619a7510df6" />
+
 
 
 
@@ -30,7 +31,8 @@
 
 - A rule was created to monitor any suspiciously repeated login failure attempts. Specifically, the rule was to detect at least 10 failed login attempts within a 5-day window. The 5-day window was chosen due to the enormous amount of endpoints in the shared cloud environment. In such environments, brute force login failures may be distributed over time and across many devices. A longer detection window will help aggregate repeated failed login attempts that might be spread out, which will reduce alert fatigue. 
 
-![image](https://github.com/user-attachments/assets/243377f6-cea8-4d11-9c61-d7cc72171268)
+<img width="727" alt="Pasted image 20250612195543" src="https://github.com/user-attachments/assets/daf7a2c6-10c8-4506-81d1-cafe2dea76f0" />
+
 
 - The appropriate Tactics, Techniques and Procedures (TTPs) from the MITRE ATT&CK Framework were selected for this detection rule.
   - Credential Access (T1110)
