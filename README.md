@@ -14,12 +14,10 @@
 
 ### **Detection and Analysis**
 
-- An alert was defined to trigger for repeated brute force login attempts on the virtual machine `win-vm-mde` within a certain time period. In this case, it was 10 failed login attempts within 5 days.
-
-- The alert corresponded to failed logon events from four distinct IP addresses:
+- An alert was defined to trigger for suspicious web requests executed from PowerShell scripts on the virtual host machine `win-vm-mde`. The `DeviceProcessEvents` table was used to uncover more information regarding the incident.
 
 
-![image](https://github.com/user-attachments/assets/cd167a51-4ae6-4c62-90d9-1b7a9d9f37e2)
+<img width="1500" alt="Pasted image 20250612200947" src="https://github.com/user-attachments/assets/9857aa60-a61f-48a3-b227-b907d1cbbcf3" />
 
 
 <img width="1415" alt="Screenshot 2025-06-12 195209" src="https://github.com/user-attachments/assets/f6696223-b551-4c6c-b93d-456bf0afefdb" />
