@@ -115,15 +115,6 @@ pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ran
 
 
 
-![image](https://github.com/user-attachments/assets/8cb74516-252b-4a8c-aaae-303b37367968)
-
-![image](https://github.com/user-attachments/assets/774cd2fd-e65d-44b6-a707-1dfad8124639)
-
-Despite this technical hiccup, a subsequent query was executed to verify if any of these malicious IP addresses successfully logged in. No successful logons were detected from any of the identified IPs.
-
-![image](https://github.com/user-attachments/assets/02b84c34-c5a8-4f09-97c9-cd8b4f74f16c)
-
-
 ### **Containment Actions**
 
 - The affected VM was isolated using Microsoft Defender for Endpoint (MDE).
@@ -131,13 +122,16 @@ Despite this technical hiccup, a subsequent query was executed to verify if any 
 <img width="1547" alt="Screenshot 2025-06-11 210357" src="https://github.com/user-attachments/assets/973f0fd2-e37c-416a-bffd-bc3981ccf6fa" />
 
 - A full antimalware scan was performed on the VM through MDE.
-- Network Security Group (NSG) rules were tightened to block Remote Desktop Protocol (RDP) access from the public internet, allowing connections only from approved IP addresses.
-- A corporate policy has been proposed to enforce this NSG lockdown for all virtual machines moving forward.
+
+- After the machine was returned with no trace of malware, it was removed from isolation.
 
 
 ### **Closure**
 
 The incident response team has reviewed and confirmed the resolution of the event. All containment and remediation steps have been completed, and relevant findings have been documented. This incident has been classified as a `True Positive – Suspicious Activity`. A brute force attack was detected targeting the `win-vm-mde` host. However, all attempts were unsuccessful, and no unauthorised access was achieved.
+
+
+Had the affected user go through extra rounds of cybersecurity awareness training and upgraded the training package from KnowBe4 and increased frequency. Also implemented a policy that restricts the use of PowerShell for non-essential users. 
 
 
 
