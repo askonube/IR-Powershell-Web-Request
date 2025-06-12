@@ -22,12 +22,13 @@
 
 <img width="1440" alt="Screenshot 2025-06-13 004249" src="https://github.com/user-attachments/assets/059f7db2-73a4-48b8-aa08-c619a7510df6" />
 
+- There were 5 processes that were created in which PowerShell was used to run a command that contained `Invoke-WebRequest`.
 
 
 
 
 
-- Login attempts were made using IP addresses from Poland, Russia, Ukraine and South Africa. It is not confirmed if the threat actors were physically located there or if a VPN, proxy server, or botnet was used. The IP address `193.37.69.105` from Russia is the most recent activity that appeared on our SIEM and it may have affected a Log Analytics Workspace Incidents diagram. This will be revisited shortly.
+
 
 - A rule was created to monitor any suspiciously repeated login failure attempts. Specifically, the rule was to detect at least 10 failed login attempts within a 5-day window. The 5-day window was chosen due to the enormous amount of endpoints in the shared cloud environment. In such environments, brute force login failures may be distributed over time and across many devices. A longer detection window will help aggregate repeated failed login attempts that might be spread out, which will reduce alert fatigue. 
 
