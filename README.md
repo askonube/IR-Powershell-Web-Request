@@ -22,28 +22,27 @@
 
 <img width="1440" alt="Screenshot 2025-06-13 004249" src="https://github.com/user-attachments/assets/059f7db2-73a4-48b8-aa08-c619a7510df6" />
 
-- There were 5 processes that were created in which PowerShell was used to run a command that contained `Invoke-WebRequest`.
+- There were 5 processes that were created in which PowerShell was used to run a command that contained `Invoke-WebRequest`. It is safe to assume that this command is pulling from an external URL to download and potentially run a script. 
 
 
 
-
-
-
-
-- A rule was created to monitor any suspiciously repeated login failure attempts. Specifically, the rule was to detect at least 10 failed login attempts within a 5-day window. The 5-day window was chosen due to the enormous amount of endpoints in the shared cloud environment. In such environments, brute force login failures may be distributed over time and across many devices. A longer detection window will help aggregate repeated failed login attempts that might be spread out, which will reduce alert fatigue. 
+- A rule was created to monitor any suspiciously created web request. Specifically, the rule was to detect any processes that included `Invoke-WebRequest` as one of its commands. This command is common to download files or scripts from websites or servers on the internet. This would evade traditional defence solutions as these solutions may not be configured to detect these types of commands from PowerShell that is ran on the host machine.
 
 <img width="727" alt="Pasted image 20250612195543" src="https://github.com/user-attachments/assets/daf7a2c6-10c8-4506-81d1-cafe2dea76f0" />
 
 
 - The appropriate Tactics, Techniques and Procedures (TTPs) from the MITRE ATT&CK Framework were selected for this detection rule.
-  - Credential Access (T1110)
-    - Brute Force (T1110)
-      - Password Guessing (T1110.001)
-      - Password Cracking (T1110.002)
-  - Discovery (T1087)
-    - Account Discovery (T1087)
-      - Local Account Discovery (T1087.001)
-      - 
+  - Credential Access (TA0002)
+    - Command and Scripting Interpreter (T1059)
+      - PowerShell (T1059.001)
+    - Exploitation for Client Execution (T1023)
+  - Command and Control (TA0011)
+    - Application Layer Protocol (T1071)
+      - Web Protocols (T1071.001)
+    - Ingress Tool Transfer (T1105)
+  - Exfiltration (TA0010)
+    - Exfiltration Over C2 Channel (T1041)
+   
 <img width="547" alt="Pasted image 20250612200020" src="https://github.com/user-attachments/assets/c55cb257-1e0a-4dbc-b9d2-8e077846014b" />
 
 <img width="550" alt="Pasted image 20250612200103" src="https://github.com/user-attachments/assets/fc28d953-0db0-45d8-8703-e77b86ab37a5" />
