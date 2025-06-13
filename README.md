@@ -85,9 +85,6 @@ Upon investigating the triggered incident `Alert PowerShell Suspicious Web Reque
 ![image](https://github.com/user-attachments/assets/1a5b9297-7f69-46af-84ac-733aee1430f4)
 
 
-![image](https://github.com/user-attachments/assets/ec4ad430-8aa5-4ed6-b2bf-04a958ead84d)
-
-
 
 The user `ylavnu` was contacted and asked what they were doing on their PC around the time of the logs being generated and they said they tried to install a free piece of software, which resulted in a black screen for a few seconds, and then 'nothing happened' afterwards. 
 
@@ -100,13 +97,13 @@ The user `ylavnu` was contacted and asked what they were doing on their PC aroun
 
 It was determined that the downloaded scripts actually did run. The scripts were then passed off to the malware reverse engineering team. Here were the short descriptions for each script:
 
-### portscan.ps1: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
+**portscan.ps1**: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
 
-### eicar.ps1: Creates an EICAR test file, which tests antivirus solutions and logs the process.
+**eicar.ps1**: Creates an EICAR test file, which tests antivirus solutions and logs the process.
 
-### exfiltratedata.ps1: Generates fake employee data, compresses it into a ZIP file, and uploads it to an Azure Blob Storage container, simulating data exfiltration.
+**exfiltratedata.ps1**: Generates fake employee data, compresses it into a ZIP file, and uploads it to an Azure Blob Storage container, simulating data exfiltration.
 
-### pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
+**pwncrypt.ps1**: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
 
 
 
