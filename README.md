@@ -86,8 +86,6 @@ Upon investigating the triggered incident `Alert PowerShell Suspicious Web Reque
 
 
 
-The user `ylavnu` was contacted and asked what they were doing on their PC around the time of the logs being generated and they said they tried to install a free piece of software, which resulted in a black screen for a few seconds, and then 'nothing happened' afterwards. 
-
 
  It is known at this point that the scripts were downloaded but it was not confirmed if they were executed. Another query was run.
 
@@ -95,7 +93,7 @@ The user `ylavnu` was contacted and asked what they were doing on their PC aroun
 
 ![image](https://github.com/user-attachments/assets/4adb0e5b-62cd-473a-95e0-616095f5e3f3)
 
-It was determined that the downloaded scripts actually did run. The scripts were then passed off to the malware reverse engineering team. Here were the short descriptions for each script:
+It was determined that the user `ylavnu` downloaded the malicious PowerShell scripts and executed them. The scripts were then passed off to the malware reverse engineering team. Here are the short descriptions for each script:
 
 **portscan.ps1**: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
 
@@ -106,6 +104,9 @@ It was determined that the downloaded scripts actually did run. The scripts were
 **pwncrypt.ps1**: Encrypts files in a selected user's desktop folder, simulating ransomware activity and creates a ransom note with decryption instructions.
 
 
+The forensics team confirmed that the user `ylavnu` ran the malicious PowerShell script on their machine.
+
+<img width="611" alt="Pasted image 20250612203238" src="https://github.com/user-attachments/assets/de8de915-a4d4-44ac-905c-968c892931c5" />
 
 
 
